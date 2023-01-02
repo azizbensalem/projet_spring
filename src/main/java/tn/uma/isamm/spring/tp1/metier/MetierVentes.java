@@ -21,7 +21,12 @@ public interface MetierVentes {
 	public List<Client> getClients();
 	public void saveClient(Client c);
 	public Client getClientById(long id);
+	public Client getClientByNomClient(String nomClient);
+
 	public Page<Client> getClientsPageable(int page, int size);
+
+	public Client getClientByOrderByNomClient();
+
 	public void deleteClient(Long id);
 
 	public AppUser saveAppUser(AppUser appUser);

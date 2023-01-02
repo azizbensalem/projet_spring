@@ -106,6 +106,26 @@ public class MetierVentesImpl implements MetierVentes {
 	}
 
 	@Override
+	public Client getClientByNomClient(String nomClient) {
+		// TODO Auto-generated method stub
+		Optional<Client> c = clientDAO.findByNomClient(nomClient);
+		if (c.isPresent())
+			return c.get();
+		else
+			return null;
+	}
+
+	@Override
+	public Client getClientByOrderByNomClient() {
+		// TODO Auto-generated method stub
+		Optional<Client> c = clientDAO.findByOrderByNomClientAsc();
+		if (c.isPresent())
+			return c.get();
+		else
+			return null;
+	}
+
+	@Override
 	public void deleteClient(Long id) {
 		// TODO Auto-generated method stub
 		clientDAO.deleteById(id);

@@ -39,8 +39,11 @@ public class ControlleurClient {
     }
 
     @PostMapping("/user/rechercheClient")
-    public String rechercheClient(long id, Model model) {
-        Client client = metierVentes.getClientById(id);
+    public String rechercheClient(String nomClient, Model model) {
+        if (nomClient == "") {
+            return "redirect:/user/clients";
+        }
+        Client client = metierVentes.getClientByNomClient(nomClient);
         boolean etat = true;
         if (client == null)
             etat = false;

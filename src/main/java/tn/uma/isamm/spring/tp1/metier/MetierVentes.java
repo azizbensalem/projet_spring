@@ -21,11 +21,15 @@ public interface MetierVentes {
 	public List<Client> getClients();
 	public void saveClient(Client c);
 	public Client getClientById(long id);
-	public Client getClientByNomClient(String nomClient);
 
 	public Page<Client> getClientsPageable(int page, int size);
 
-	public Client getClientByOrderByNomClient();
+	Page<Client> getClientByNomClient(String nomClient, int page, int size);
+
+	Page<Client> getClientByVille(String ville, int page, int size);
+	Page<Client> getClientsPageableOrderByNomClient(int page, int size);
+
+	Page<Client> getClientsPageableOrderByNumber(int page, int size);
 
 	public void deleteClient(Long id);
 
@@ -36,8 +40,7 @@ public interface MetierVentes {
 	public List<AppUser> getAppUsers();
 	
 	
-	//Page<Produit> getProduitsPageableByDesignation(int page, int size, String mc);
-	
+
 
 	
 

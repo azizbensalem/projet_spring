@@ -29,8 +29,8 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-6">
-              <form th:action="@{/user/rechercheClient}" method="post">
+            <div class="col-3">
+              <form th:action="@{/user/rechercheClient}" method="get">
                 <div class="input-group">
                   <input type="text" name="nomClient" class="form-control"
                          placeholder="Recherche" />
@@ -40,7 +40,33 @@
                 </div>
               </form>
             </div>
-            <div class="col-6">
+              <div class="col-3">
+                  <form th:action="@{/user/rechercheClientSort}" method="get">
+                      <div class="input-group">
+                          <select name="type" class="form-control">
+                              <option name="type" th:value="Nom">Nom</option>
+                              <option name="type" th:value="Nombre">Nombre de commande</option>
+                          </select>
+                          <div class="input-group-append">
+                              <button class="btn btn-secondary" type="submit">Ok</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="col-3">
+                  <form th:action="@{/user/rechercheClientVille}" method="get">
+                      <div class="input-group">
+                          <select name="ville" class="form-control">
+                              <option name="ville" th:value="Tunis">Tunis</option>
+                              <option name="ville" th:value="Manouba">Manouba</option>
+                          </select>
+                          <div class="input-group-append">
+                              <button class="btn btn-secondary" type="submit">Ok</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+            <div class="col-3">
               <div class="text-right">
                 <a class="btn btn-sm btn-success center"
                    th:href="@{/admin/client/ajout}"> <i

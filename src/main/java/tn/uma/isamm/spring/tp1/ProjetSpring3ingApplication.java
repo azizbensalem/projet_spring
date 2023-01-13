@@ -57,7 +57,7 @@ public class ProjetSpring3ingApplication {
 		LigneCommandeDAO ligneCommandeDAO = ctx.getBean(LigneCommandeDAO.class);
 		
 		
-		DetailClient dc1 = new DetailClient("tunis","202020","mail1@gmail.com");
+		DetailClient dc1 = new DetailClient("Tunis","202020","mail1@gmail.com");
 		Client c1 = new Client("ali");
 		
 		c1.setDetailClient(dc1);
@@ -67,7 +67,21 @@ public class ProjetSpring3ingApplication {
 		clientDAO.save(c1);
 				
 		//session.save(dc1); //sauvegardé automatiquement grâce à l'attribut cascade="save-update"
-						
+
+		DetailClient dc2 = new DetailClient("Tunis","202020","ab@gmail.com");
+		Client c2 = new Client("ab");
+
+		c2.setDetailClient(dc2);
+		dc2.setClient(c2);
+		clientDAO.save(c2);
+
+		DetailClient dc3 = new DetailClient("Manouba","202020","aaa@gmail.com");
+		Client c3 = new Client("aaa");
+
+		c3.setDetailClient(dc3);
+		dc3.setClient(c3);
+		clientDAO.save(c3);
+
 		/*** Persistance d'une relation One-To-Many   ****/
 		
 		
@@ -85,8 +99,23 @@ public class ProjetSpring3ingApplication {
 		c1.ajouterCommande(cd2);
 		c1.ajouterCommande(cd3);
 		
-		clientDAO.save(c1);	
-		
+		clientDAO.save(c1);
+
+
+		Commande cd7 = new Commande(new Date(),"Tunis", c2);
+		Commande cd8 = new Commande(new Date(), "Bizerte", c2);
+
+		//Client est l'entité parente, c'est donc elle qui se charge de sauvegarder les commandes qui y sont relatives.
+		c2.ajouterCommande(cd7);
+		c2.ajouterCommande(cd8);
+
+		clientDAO.save(c2);
+
+		Commande cd9 = new Commande(new Date(), "Nabeul", c3);
+		c3.ajouterCommande(cd9);
+		clientDAO.save(c3);
+
+
 		/*** Persistance d'une relation Many-To-Many non porteuse   ****/
 			
 		Categorie cat1 = new Categorie(1L, "catégorie 1");

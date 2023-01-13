@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,23 +107,29 @@ public class MetierVentesImpl implements MetierVentes {
 	}
 
 	@Override
-	public Client getClientByNomClient(String nomClient) {
+	public Page<Client> getClientByNomClient(String nomClient, int page, int size) {
 		// TODO Auto-generated method stub
-		Optional<Client> c = clientDAO.findByNomClient(nomClient);
-		if (c.isPresent())
-			return c.get();
-		else
-			return null;
+		PageRequest pr = PageRequest.of(page, size);
+		return clientDAO.findByNomClient(nomClient, pr);
 	}
 
 	@Override
-	public Client getClientByOrderByNomClient() {
+	public Page<Client> getClientByVille(String ville, int page, int size) {
 		// TODO Auto-generated method stub
-		Optional<Client> c = clientDAO.findByOrderByNomClientAsc();
-		if (c.isPresent())
-			return c.get();
-		else
-			return null;
+		PageRequest pr = PageRequest.of(page, size);
+		return clientDAO.findByDetailClientAdresse(ville, pr);
+	}
+
+	@Override
+	public Page<Client> getClientsPageableOrderByNomClient(int page, int size) {
+		PageRequest pr = PageRequest.of(page, size);
+		return clientDAO.findAllByOrderByNomClientAsc(pr);
+	}
+
+	@Override
+	public Page<Client> getClientsPageableOrderByNumber(int page, int size) {
+		PageRequest pr = PageRequest.of(page, size);
+		return clientDAO.findAllByOrderByCommandesSizeAsc(pr);
 	}
 
 	@Override
@@ -152,8 +159,6 @@ public class MetierVentesImpl implements MetierVentes {
 		AppRole role =appRoleDAO.findByRoleName(nomRole);
 		if(user!=null && role!=null)
 			user.getRoles().add(role);
-		
-		
 	}
 
 	@Override

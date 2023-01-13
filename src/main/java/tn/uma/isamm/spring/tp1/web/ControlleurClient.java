@@ -38,25 +38,68 @@ public class ControlleurClient {
         return "clients";
     }
 
-    @PostMapping("/user/rechercheClient")
-    public String rechercheClient(String nomClient, Model model) {
-        if (nomClient == "") {
-            return "redirect:/user/clients";
-        }
-        Client client = metierVentes.getClientByNomClient(nomClient);
-        boolean etat = true;
-        if (client == null)
-            etat = false;
-        else {
-            ArrayList<Client> clients = new ArrayList<Client>();
-            clients.add(client);
-            model.addAttribute("activePage", 0);
-            model.addAttribute("size", 2);
-            model.addAttribute("taillePagination", 0);
-            model.addAttribute("listeClients", clients);
-            model.addAttribute("etat", etat);
-        }
+    @RequestMapping("/user/rechercheClient")
+    public String rechercheClient(String nomClient, Model model,  @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "2") int size,
+      @RequestParam(name = "errorMessage", defaultValue = "") String errorMessage) {
+
+        Page<Client> listeClients = metierVentes.getClientByNomClient(nomClient, page, size);
+        model.addAttribute("activePage", page);
+        model.addAttribute("size", size);
+        int[] taillePagination = IntStream.range(0, listeClients.getTotalPages()).toArray();
+        model.addAttribute("taillePagination", taillePagination);
+        model.addAttribute("nbPages", listeClients.getTotalPages());
+        model.addAttribute("nbElements", listeClients.getTotalElements());
+        model.addAttribute("listeClients", listeClients);
         return "clients";
+    }
+
+    @RequestMapping("/user/rechercheClientVille")
+    public String rechercheClientVille(String ville, Model model,  @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "2") int size,
+      @RequestParam(name = "errorMessage", defaultValue = "") String errorMessage) {
+
+        Page<Client> listeClients = metierVentes.getClientByVille(ville, page, size);
+        model.addAttribute("activePage", page);
+        model.addAttribute("size", size);
+        int[] taillePagination = IntStream.range(0, listeClients.getTotalPages()).toArray();
+        model.addAttribute("taillePagination", taillePagination);
+        model.addAttribute("nbPages", listeClients.getTotalPages());
+        model.addAttribute("nbElements", listeClients.getTotalElements());
+        model.addAttribute("listeClients", listeClients);
+        return "clients";
+    }
+
+    @RequestMapping("/user/rechercheClientSort")
+    public String rechercheClientSort(String type, Model model, @RequestParam(name = "page", defaultValue = "0") int page,
+    @RequestParam(name = "size", defaultValue = "2") int size,
+    @RequestParam(name = "errorMessage", defaultValue = "") String errorMessage) {
+
+        if (type.equals("Nom") ) {
+            Page<Client> listeClients = metierVentes.getClientsPageableOrderByNomClient(page, size);
+
+            model.addAttribute("activePage", page);
+            model.addAttribute("size", size);
+            int[] taillePagination = IntStream.range(0, listeClients.getTotalPages()).toArray();
+            model.addAttribute("taillePagination", taillePagination);
+            model.addAttribute("nbPages", listeClients.getTotalPages());
+            model.addAttribute("nbElements", listeClients.getTotalElements());
+            model.addAttribute("listeClients", listeClients);
+            return "clients";
+        }
+        if (type.equals("Nombre") ) {
+            Page<Client> listeClients = metierVentes.getClientsPageableOrderByNumber(page, size);
+
+            model.addAttribute("activePage", page);
+            model.addAttribute("size", size);
+            int[] taillePagination = IntStream.range(0, listeClients.getTotalPages()).toArray();
+            model.addAttribute("taillePagination", taillePagination);
+            model.addAttribute("nbPages", listeClients.getTotalPages());
+            model.addAttribute("nbElements", listeClients.getTotalElements());
+            model.addAttribute("listeClients", listeClients);
+            return "clients";
+        }
+        return "redirect:/user/clients";
     }
 
     @GetMapping("/admin/client/ajout")

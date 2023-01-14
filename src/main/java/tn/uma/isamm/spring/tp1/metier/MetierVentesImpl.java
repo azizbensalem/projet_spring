@@ -1,12 +1,12 @@
 package tn.uma.isamm.spring.tp1.metier;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,12 +78,6 @@ public class MetierVentesImpl implements MetierVentes {
 	}
 
 	@Override
-	public List<Client> getClients() {
-		// TODO Auto-generated method stub
-		return clientDAO.findAll();
-	}
-
-	@Override
 	public void saveClient(Client p) {
 		// TODO Auto-generated method stub
 		clientDAO.save(p);
@@ -94,6 +88,12 @@ public class MetierVentesImpl implements MetierVentes {
 		// TODO Auto-generated method stub
 		PageRequest pr = PageRequest.of(page, size);
 		return clientDAO.findAll(pr);
+	}
+
+	@Override
+	public List<Client> getClients() {
+		// TODO Auto-generated method stub
+		return clientDAO.findAll();
 	}
 
 	@Override
@@ -172,7 +172,5 @@ public class MetierVentesImpl implements MetierVentes {
 		// TODO Auto-generated method stub
 		return appUserDAO.findAll();
 	}
-	
-	
 
 }

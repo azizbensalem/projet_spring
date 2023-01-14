@@ -15,6 +15,7 @@ import tn.uma.isamm.spring.tp1.metier.MetierVentes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Controller
@@ -26,6 +27,7 @@ public class ControlleurClient {
     public String clients(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
                            @RequestParam(name = "size", defaultValue = "2") int size,
                            @RequestParam(name = "errorMessage", defaultValue = "") String errorMessage) {
+
         Page<Client> listeClients = metierVentes.getClientsPageable(page, size);
 
         model.addAttribute("activePage", page);
@@ -35,6 +37,7 @@ public class ControlleurClient {
         model.addAttribute("nbPages", listeClients.getTotalPages());
         model.addAttribute("nbElements", listeClients.getTotalElements());
         model.addAttribute("listeClients", listeClients);
+        model.addAttribute("type", "Client");
         return "clients";
     }
 
@@ -67,6 +70,7 @@ public class ControlleurClient {
         model.addAttribute("nbPages", listeClients.getTotalPages());
         model.addAttribute("nbElements", listeClients.getTotalElements());
         model.addAttribute("listeClients", listeClients);
+
         return "clients";
     }
 
@@ -130,12 +134,16 @@ public class ControlleurClient {
     public String modifierClient(@RequestParam(name="id")Long id, Model model) {
         Client client = metierVentes.getClientById(id);
         model.addAttribute("client",client);
+        model.addAttribute("detailClient",client.getDetailClient());
             return "modifierClient";
     }
 
     @PostMapping("/admin/client/edit")
-    public String editClient(Client client, Long id) {
+    public String editClient(Client client, DetailClient detailClient, Long id) {
         client.setIdClient(id);
+        detailClient.setIdDetail(client.getIdClient());
+        client.setDetailClient(detailClient);
+        detailClient.setClient(client);
         metierVentes.saveClient(client);
         return "redirect:/user/clients";
     }

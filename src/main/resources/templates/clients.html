@@ -29,6 +29,8 @@
         </div>
         <div class="card-body">
           <div class="row">
+              <div class="col-9">
+                  <div class="row">
             <div class="col-3">
               <form th:action="@{/user/rechercheClient}" method="get">
                 <div class="input-group">
@@ -40,12 +42,13 @@
                 </div>
               </form>
             </div>
-              <div class="col-3">
+              <div class="col-5">
                   <form th:action="@{/user/rechercheClientSort}" method="get">
                       <div class="input-group">
                           <select name="type" class="form-control">
-                              <option name="type" th:value="Nom">Nom</option>
-                              <option name="type" th:value="Nombre">Nombre de commande</option>
+                              <option selected disabled>Choisir le type de tri</option>
+                              <option name="type" th:value="Nom">Par nom</option>
+                              <option name="type" th:value="Nombre">Par nombre de commandes</option>
                           </select>
                           <div class="input-group-append">
                               <button class="btn btn-secondary" type="submit">Ok</button>
@@ -53,12 +56,15 @@
                       </div>
                   </form>
               </div>
-              <div class="col-3">
+              <div class="col-4">
                   <form th:action="@{/user/rechercheClientVille}" method="get">
                       <div class="input-group">
                           <select name="ville" class="form-control">
                               <option name="ville" th:value="Tunis">Tunis</option>
                               <option name="ville" th:value="Manouba">Manouba</option>
+                              <option name="ville" th:value="Bizerte">Bizerte</option>
+                              <option name="ville" th:value="Ariana">Ariana</option>
+                              <option name="ville" th:value="Nabeul">Nabeul</option>
                           </select>
                           <div class="input-group-append">
                               <button class="btn btn-secondary" type="submit">Ok</button>
@@ -66,15 +72,16 @@
                       </div>
                   </form>
               </div>
+                  </div>
+              </div>
             <div class="col-3">
-              <div class="text-right">
-                <a class="btn btn-sm btn-success center"
+                <a class="btn btn-sm btn-success"
                    th:href="@{/admin/client/ajout}"> <i
                         class="fas fa-plus-circle"></i> Ajouter un client
                 </a>
-              </div>
             </div>
-          </div>
+
+
         </div>
         <div class="card-body">
           <div class="table-responsive">

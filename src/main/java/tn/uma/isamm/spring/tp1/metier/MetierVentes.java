@@ -1,6 +1,8 @@
 package tn.uma.isamm.spring.tp1.metier;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,6 @@ public interface MetierVentes {
 	public Page<Produit> getProduitsPageable(int page, int size);
 	public List<Categorie> getCategories();
 	public void deleteProduit(Long id);
-
-	// client
 	public List<Client> getClients();
 	public void saveClient(Client c);
 	public Client getClientById(long id);

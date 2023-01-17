@@ -54,6 +54,8 @@ public class ControlleurClient {
         model.addAttribute("nbPages", listeClients.getTotalPages());
         model.addAttribute("nbElements", listeClients.getTotalElements());
         model.addAttribute("listeClients", listeClients);
+        model.addAttribute("type", "rechercheClient");
+        model.addAttribute("input", nomClient);
         return "clients";
     }
 
@@ -70,7 +72,8 @@ public class ControlleurClient {
         model.addAttribute("nbPages", listeClients.getTotalPages());
         model.addAttribute("nbElements", listeClients.getTotalElements());
         model.addAttribute("listeClients", listeClients);
-
+        model.addAttribute("type", "rechercheClientVille");
+        model.addAttribute("input", ville);
         return "clients";
     }
 
@@ -89,6 +92,8 @@ public class ControlleurClient {
             model.addAttribute("nbPages", listeClients.getTotalPages());
             model.addAttribute("nbElements", listeClients.getTotalElements());
             model.addAttribute("listeClients", listeClients);
+            model.addAttribute("type", "rechercheClientSortNom");
+            model.addAttribute("input", type);
             return "clients";
         }
         if (type.equals("Nombre") ) {
@@ -101,19 +106,21 @@ public class ControlleurClient {
             model.addAttribute("nbPages", listeClients.getTotalPages());
             model.addAttribute("nbElements", listeClients.getTotalElements());
             model.addAttribute("listeClients", listeClients);
+            model.addAttribute("type", "rechercheClientSortNombre");
+            model.addAttribute("input", type);
             return "clients";
         }
         return "redirect:/user/clients";
     }
 
-    @GetMapping("/admin/client/ajout")
+    @GetMapping("/admin/clientAjout")
     public String ajoutClient(Model model) {
         model.addAttribute("client", new Client());
         model.addAttribute("detailClient", new DetailClient());
         return "ajouterClient";
     }
 
-    @PostMapping("/admin/client/enregister")
+    @PostMapping("/admin/clientEnregister")
     public String enregistrerClient(Client c, DetailClient d, Model model) {
         d.setClient(c);
         c.setDetailClient(d);
@@ -121,7 +128,7 @@ public class ControlleurClient {
         return "redirect:/user/clients";
     }
 
-    @GetMapping("/admin/client/supprimer")
+    @GetMapping("/admin/clientSupprimer")
     public String supprimerClient(Long id, Long activePage, Long nbElements, Long size, RedirectAttributes ra) {
         metierVentes.deleteClient(id);
         if(activePage>0 && ((nbElements-1)==(size * (activePage))))
@@ -130,7 +137,7 @@ public class ControlleurClient {
         return "redirect:/user/clients";
     }
 
-    @GetMapping("/admin/client/modifier")
+    @GetMapping("/admin/clientModifier")
     public String modifierClient(@RequestParam(name="id")Long id, Model model) {
         Client client = metierVentes.getClientById(id);
         model.addAttribute("client",client);
@@ -138,7 +145,7 @@ public class ControlleurClient {
             return "modifierClient";
     }
 
-    @PostMapping("/admin/client/edit")
+    @PostMapping("/admin/clientEdit")
     public String editClient(Client client, DetailClient detailClient, Long id) {
         client.setIdClient(id);
         detailClient.setIdDetail(client.getIdClient());
@@ -148,14 +155,14 @@ public class ControlleurClient {
         return "redirect:/user/clients";
     }
 
-    @GetMapping("/admin/client/detail")
+    @GetMapping("/user/clientDetail")
     public String detailClient(@RequestParam(name="id")Long id, Model model) {
         Client client = metierVentes.getClientById(id);
         model.addAttribute("client",client);
         return "detailClient";
     }
 
-    @GetMapping("/admin/client/commandes")
+    @GetMapping("/user/clientCommandes")
     public String detailCommandes(@RequestParam(name="id")Long id, Model model) {
         Client client = metierVentes.getClientById(id);
         model.addAttribute("client",client);
